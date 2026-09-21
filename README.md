@@ -194,3 +194,17 @@ If this were moving toward production, I would test:
 - [Accessibility approach](docs/accessibility.md)
 - [Web standards & design system](docs/design-system.md)
 - [Heuristic evaluation & revision log](docs/heuristic-evaluation.md)
+
+## Cedarline portfolio
+
+| Project | UX problem |
+| --- | --- |
+| **Project 1 — Claim Reporting** | How should a customer report a loss? |
+| [Project 2 — Claims Operations](https://github.com/joshuaokent-spec/Cedarline-Claims-Operations-Dashboard) | How should an employee manage the work that follows? |
+| [Project 3 — Policy & Coverage IA](https://github.com/joshuaokent-spec/Cedarline-Policy-Coverage-IA) | How should customers find policy and coverage information? |
+
+Together the three projects demonstrate transactional UX, enterprise UX, and information architecture in one connected service domain.
+
+## Quality checks
+
+A lightweight GitHub Actions validation runs on pushes and pull requests to check JavaScript syntax, XML parsing, duplicate HTML IDs, and broken same-page anchors.
