@@ -1,121 +1,196 @@
 # Cedarline Mutual — Insurance Claim Reporting UX
 
-A responsive **First Notice of Loss (FNOL)** UX case study and working front-end prototype for a fictional personal-lines insurer.
+A responsive **First Notice of Loss (FNOL)** experience designed for people reporting an auto or homeowners claim while stressed, interrupted, or missing information.
 
-**Portfolio focus:** UX design · information architecture · accessibility · responsive web design · HTML/CSS/JavaScript/XML
+**UX portfolio case study · Responsive web design · Information architecture · Accessibility · HTML/CSS/JavaScript/XML**
 
-> Cedarline Mutual is fictional. This project does not provide insurance coverage or claims services.
+[**Live prototype**](https://joshuaokent-spec.github.io/cedarline-claim-reporting-ux/) · [**Figma process board**](https://www.figma.com/design/2ehS8ZH3HoTEdLXnmrD64d) · [**Full case study**](docs/case-study.md)
 
-## Project overview
+> **Cedarline Mutual is fictional.** This project does not provide insurance coverage or claims services.
 
-Reporting an insurance loss is a difficult UX moment. A claimant may be stressed, interrupted, using a phone, missing information, or relying on assistive technology. At the same time, the insurer needs enough structured information to begin triage.
+## At a glance
 
-I designed this experience around one core question:
+| | |
+| --- | --- |
+| **Role** | UX Designer + front-end prototyper |
+| **Project type** | Rapid portfolio concept sprint |
+| **Primary challenge** | Balance a stressed claimant’s need for simplicity with structured FNOL information needs |
+| **Deliverables** | Proto-personas, requirements, task flow, IA, low-fi wireframes, design standards, heuristic evaluation, responsive coded prototype |
+| **Tools / tech** | Figma, HTML, CSS, JavaScript, XML, GitHub Pages |
+| **Accessibility** | WCAG-informed interaction patterns; not presented as formally audited conformance |
 
-**How can a claimant report a loss confidently without already understanding insurance terminology or having every detail available?**
+## The problem
 
-The result is a mobile-first, seven-step claim-reporting flow that makes incomplete information, save-and-resume, optional evidence, review, and clear post-submission next steps first-class parts of the experience.
+Reporting an insurance loss is not a calm, ideal-use scenario. A claimant may be standing beside a damaged vehicle, dealing with water in a home, using a phone, relying on browser zoom or keyboard navigation, or simply not know the answer to every question yet.
 
-## UX process
+At the same time, claims operations need enough structured information to begin triage.
 
-This is a rapid portfolio concept rather than a production engagement. I do **not** claim primary user-interview or usability-study findings.
+I framed the project around one question:
 
-Instead, I used:
+> **How can someone report a loss confidently without already understanding insurance terminology or having every detail available?**
 
-- explicit proto-personas and assumptions;
-- desk research and public insurance-service patterns;
-- task analysis and information architecture;
-- accessibility requirements and heuristic evaluation;
-- low-fidelity wireframes in Figma;
-- a responsive coded prototype for implementation validation.
+## Design response
 
-In a production engagement, the next step would be moderated task-based usability testing with recent claimants and users of browser zoom, keyboard navigation, and screen readers.
-
-## Core flow
+The prototype uses a short, progressive flow:
 
 ```text
-Start
+Choose policy
   → What happened?
   → When & where?
   → Damage & safety
   → Photos & documents
   → Contact preferences
-  → Review
+  → Review & edit
   → Confirmation & next steps
 ```
 
-## Key design decisions
+The current implementation supports **Personal Auto** and **Homeowners** scenarios and filters XML-driven claim categories based on the policy the user selects.
 
-1. **Unknown is a valid state.** Exact time and some supporting information can be added later.
-2. **Autosave is visible.** Form progress persists with `localStorage`, and the interface communicates saved state.
-3. **Plain language comes first.** Prompts use language like “What happened?” instead of expecting insurance vocabulary.
-4. **Evidence is optional for intake.** A claimant can start a report without delaying submission to gather files.
-5. **Validation is accessible.** Errors are written in text, do not rely on color alone, and are summarized in a focusable error region.
-6. **Confirmation is part of the workflow.** The experience provides a claim reference, status, selected contact method, and concrete next steps.
-7. **Receipt is not approval.** The confirmation explicitly distinguishes successful submission from coverage or payment determination.
+## What I designed for
+
+### Stress and incomplete information
+- exact time can be unknown;
+- evidence can be added later;
+- “Something else / not sure” is a valid claim category;
+- repair estimates are not required for initial intake.
+
+### Interruption
+- progress saves to `localStorage`;
+- save state is visible;
+- a draft can reopen at the previous step;
+- browser file selections are **not** falsely represented as restored.
+
+### Clear recovery
+- errors appear beside the relevant field and in a focusable summary;
+- the review screen provides direct Edit actions back to each section;
+- submission clearly distinguishes **report received** from **coverage approved**.
+
+### Accessibility
+- native inputs remain underneath visual choice cards;
+- grouped questions use `fieldset` / `legend`;
+- progress is exposed as a programmatic progressbar;
+- status changes use live regions;
+- keyboard focus is visible;
+- reduced-motion preferences are respected;
+- mobile layouts reflow to one column.
+
+## Research integrity
+
+This is a rapid portfolio project, not a production research engagement.
+
+I **did not fabricate** user interviews, survey results, usability metrics, or research-derived personas. Instead, I documented assumptions as **proto-personas** and used:
+
+- public insurance-service patterns;
+- task analysis;
+- information architecture;
+- accessibility requirements;
+- heuristic evaluation;
+- iterative wireframing and coded prototyping.
+
+In a production project, the next step would be moderated task-based usability testing with representative claimants and assistive-technology users.
+
+## Iteration evidence
+
+The project includes a documented heuristic review showing problems found in the first prototype and the changes made in response.
+
+Examples:
+
+- a single-policy prototype became policy-aware Auto/Home branching;
+- “Save & exit” became the truthful “Save progress” action;
+- file-restoration behavior was corrected to reflect browser security;
+- review gained direct Edit actions;
+- visual-only progress gained programmatic semantics;
+- reduced-motion support was added.
+
+Read the full [heuristic evaluation and revision log](docs/heuristic-evaluation.md).
+
+## Information architecture
+
+The shared shell keeps the high-level mental model consistent while relevant questions vary by policy:
+
+- **Global shell:** progress, save state, help, errors, Back/Continue
+- **Policy context:** Auto or Homeowners
+- **Loss category:** filtered from XML based on selected policy
+- **Shared intake:** timing/location, safety/damage, evidence, contact
+- **Review:** grouped summary with section-level editing
+- **Post-submission:** reference number, status, contact preference, next steps
+
+See [design process](docs/design-process.md) for the reasoning behind the task flow.
+
+## Corporate web standards artifact
+
+I also created a small project-level design-system document covering:
+
+- brand and semantic color tokens;
+- typography and spacing;
+- buttons, choice cards, inputs, status messaging;
+- responsive behavior;
+- content standards;
+- accessibility standards.
+
+See [Cedarline Web Standards & Design System](docs/design-system.md).
 
 ## Technical implementation
 
-The prototype intentionally demonstrates the technical skills listed alongside UX work in the target role:
+This is a working front-end prototype, not just static mockups.
 
 - semantic HTML;
 - responsive CSS;
 - vanilla JavaScript;
-- XML-driven loss categories;
-- DOM parsing with `DOMParser`;
-- progressive fallback data if XML loading fails;
-- `localStorage` save-and-resume behavior;
-- accessible form validation and live status messaging;
-- keyboard-visible focus states;
-- responsive mobile/desktop layouts.
+- XML-driven policy-aware loss categories;
+- `DOMParser` with fallback data;
+- local draft persistence;
+- accessible validation and live status messaging;
+- edit-from-review navigation;
+- responsive mobile/desktop layouts;
+- static deployment through GitHub Pages.
 
-## Repository structure
+## Repository map
 
 ```text
 .
 ├── index.html
 ├── styles.css
 ├── app.js
+├── assets/
+│   └── cedarline-mark.svg
 ├── data/
 │   └── loss-categories.xml
 └── docs/
     ├── case-study.md
     ├── design-process.md
-    └── accessibility.md
+    ├── accessibility.md
+    ├── design-system.md
+    └── heuristic-evaluation.md
 ```
 
 ## Run locally
 
-The prototype loads XML with `fetch()`, so use a local web server instead of opening `index.html` directly.
+The prototype loads XML with `fetch()`, so serve the repository instead of opening `index.html` directly.
 
 ```bash
 python -m http.server 8000
 ```
 
-Then open:
-
-```text
-http://localhost:8000
-```
-
-## Figma
-
-The UX discovery board, task flow, information architecture, and low-fidelity wireframes were created in Figma:
-
-https://www.figma.com/design/2ehS8ZH3HoTEdLXnmrD64d
-
-## Case-study documentation
-
-- [Case study](docs/case-study.md)
-- [Design process](docs/design-process.md)
-- [Accessibility approach](docs/accessibility.md)
+Then open `http://localhost:8000`.
 
 ## What I would validate next
 
-The highest-risk assumptions I would test next are:
+If this were moving toward production, I would test:
 
-- whether users understand which information can be deferred;
-- whether the progress model feels transparent without creating false certainty;
-- whether “I don’t know yet” states reduce abandonment;
-- whether the confirmation screen provides reassurance without implying coverage has been determined;
-- whether the experience remains comfortable at high zoom and with keyboard/screen-reader navigation.
+- whether users understand what can be deferred;
+- whether policy-aware categories match user language;
+- whether visible autosave increases confidence;
+- whether “Unsure” reduces abandonment without reducing useful intake quality;
+- whether users understand the distinction between receipt and coverage determination;
+- the flow at 200–400% zoom;
+- keyboard and screen-reader behavior across supported browser/AT combinations;
+- whether the confirmation screen gives enough post-submission orientation.
+
+## Supporting documentation
+
+- [Full UX case study](docs/case-study.md)
+- [Design process](docs/design-process.md)
+- [Accessibility approach](docs/accessibility.md)
+- [Web standards & design system](docs/design-system.md)
+- [Heuristic evaluation & revision log](docs/heuristic-evaluation.md)
