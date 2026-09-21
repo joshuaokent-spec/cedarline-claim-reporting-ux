@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Cedarline Mutual fictional First Notice of Loss UX portfolio prototype" />
+  <title>Cedarline Mutual | Report a Claim</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to claim form</a>
+  <header class="site-header">
+    <div class="brand-wrap">
+      <div class="brand-mark" aria-hidden="true">CM</div>
+      <div>
+        <p class="eyebrow">Cedarline Mutual</p>
+        <p class="brand-subtitle">Fictional UX portfolio concept</p>
+      </div>
+    </div>
+    <button class="link-button" id="saveExit" type="button">Save & exit</button>
+  </header>
+
+  <main id="main" class="shell">
+    <aside class="context-panel" aria-label="Claim report guidance">
+      <p class="eyebrow">Report a claim</p>
+      <h1>Start now. Add details later.</h1>
+      <p>You do not need every answer, document, or estimate to begin. We save your progress as you go.</p>
+      <div class="help-card">
+        <h2>Before you continue</h2>
+        <p>If anyone needs urgent medical or emergency help, contact emergency services first.</p>
+      </div>
+      <dl class="policy-card">
+        <div><dt>Policy</dt><dd>Personal Auto</dd></div>
+        <div><dt>Vehicle</dt><dd>2023 Honda CR-V</dd></div>
+        <div><dt>Policy ending</dt><dd>4821</dd></div>
+      </dl>
+    </aside>
+
+    <section class="claim-card" aria-labelledby="stepHeading">
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span id="stepLabel">Step 1 of 7</span>
+          <span id="saveStatus" role="status" aria-live="polite">Not saved yet</span>
+        </div>
+        <div class="progress-track" aria-hidden="true"><div id="progressBar" class="progress-bar"></div></div>
+      </div>
+
+      <div id="globalError" class="error-summary" role="alert" tabindex="-1" hidden></div>
+      <div id="liveStatus" class="sr-only" role="status" aria-live="polite"></div>
+
+      <form id="claimForm" novalidate>
+        <section class="step" data-step="1">
+          <p class="eyebrow">Get started</p>
+          <h2 id="stepHeading" tabindex="-1">Start your claim report</h2>
+          <p>We’ll ask only for information that helps us begin reviewing the loss. Most people can start in about 5–10 minutes.</p>
+          <div class="checklist">
+            <h3>Helpful if you have it</h3>
+            <ul>
+              <li>Photos of visible damage</li>
+              <li>Other driver or involved-party information</li>
+              <li>Police or incident report number</li>
+            </ul>
+            <p class="muted">Don’t have these? You can still continue.</p>
+          </div>
+        </section>
+
+        <section class="step" data-step="2" hidden>
+          <p class="eyebrow">What happened?</p>
+          <h2 tabindex="-1">Choose the option that fits best</h2>
+          <p>You can clarify details later. If you’re unsure, choose “Something else / not sure.”</p>
+          <fieldset>
+            <legend class="sr-only">Loss type</legend>
+            <div id="lossOptions" class="choice-grid" aria-describedby="lossHelp"></div>
+            <p id="lossHelp" class="field-help">Categories are loaded from an XML data file for this prototype.</p>
+          </fieldset>
+        </section>
+
+        <section class="step" data-step="3" hidden>
+          <p class="eyebrow">When & where</p>
+          <h2 tabindex="-1">Tell us when and where it happened</h2>
+          <div class="field-grid two">
+            <div class="field">
+              <label for="lossDate">Date of loss</label>
+              <input id="lossDate" name="lossDate" type="date" required />
+              <p class="field-error" id="lossDateError"></p>
+            </div>
+            <div class="field">
+              <label for="lossTime">Approximate time <span class="optional">optional</span></label>
+              <input id="lossTime" name="lossTime" type="time" />
+            </div>
+          </div>
+          <label class="check-row"><input id="unknownTime" type="checkbox" /> I don’t know the exact time</label>
+          <div class="field">
+            <label for="location">Where did it happen?</label>
+            <input id="location" name="location" type="text" autocomplete="street-address" placeholder="Street, intersection, or general location" required />
+            <p class="field-help">A general location is okay if you don’t know the exact address.</p>
+            <p class="field-error" id="locationError"></p>
+          </div>
+        </section>
+
+        <section class="step" data-step="4" hidden>
+          <p class="eyebrow">Damage & safety</p>
+          <h2 tabindex="-1">What do you know right now?</h2>
+          <fieldset>
+            <legend>Is anyone injured?</legend>
+            <div class="segmented">
+              <label><input type="radio" name="injury" value="No" required /><span>No</span></label>
+              <label><input type="radio" name="injury" value="Yes" /><span>Yes</span></label>
+              <label><input type="radio" name="injury" value="Unsure" /><span>Unsure</span></label>
+            </div>
+            <p class="field-error" id="injuryError"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Can the vehicle or property be used safely?</legend>
+            <div class="segmented">
+              <label><input type="radio" name="usable" value="Yes" required /><span>Yes</span></label>
+              <label><input type="radio" name="usable" value="No" /><span>No</span></label>
+              <label><input type="radio" name="usable" value="Unsure" /><span>Unsure</span></label>
+            </div>
+            <p class="field-error" id="usableError"></p>
+          </fieldset>
+          <div class="field">
+            <label for="damage">Describe the visible damage</label>
+            <textarea id="damage" name="damage" rows="5" required placeholder="What can you see right now?"></textarea>
+            <p class="field-help">You don’t need a repair estimate or exhaustive list yet.</p>
+            <p class="field-error" id="damageError"></p>
+          </div>
+        </section>
+
+        <section class="step" data-step="5" hidden>
+          <p class="eyebrow">Photos & documents</p>
+          <h2 tabindex="-1">Add evidence if you have it</h2>
+          <p>Uploads are optional. You can add more from the claim-status page after submitting.</p>
+          <div class="upload-box">
+            <label for="evidence">Choose photos or documents</label>
+            <input id="evidence" type="file" multiple accept="image/*,.pdf,.doc,.docx" />
+            <p id="fileStatus" class="field-help">No files selected.</p>
+          </div>
+          <label class="check-row"><input id="skipEvidence" type="checkbox" /> I’ll add evidence later</label>
+        </section>
+
+        <section class="step" data-step="6" hidden>
+          <p class="eyebrow">Contact preferences</p>
+          <h2 tabindex="-1">How should the claims team contact you?</h2>
+          <fieldset>
+            <legend>Preferred first contact</legend>
+            <div class="choice-grid compact">
+              <label class="choice-card"><input type="radio" name="contact" value="Text message" required /><span><strong>Text message</strong><small>Good for quick updates</small></span></label>
+              <label class="choice-card"><input type="radio" name="contact" value="Phone call" /><span><strong>Phone call</strong><small>Talk directly with a representative</small></span></label>
+              <label class="choice-card"><input type="radio" name="contact" value="Email" /><span><strong>Email</strong><small>Useful for detailed follow-up</small></span></label>
+            </div>
+            <p class="field-error" id="contactError"></p>
+          </fieldset>
+          <div class="field">
+            <label for="contactWindow">Best time to reach you <span class="optional">optional</span></label>
+            <input id="contactWindow" name="contactWindow" type="text" placeholder="Example: weekdays after 4 PM" />
+          </div>
+        </section>
+
+        <section class="step" data-step="7" hidden>
+          <p class="eyebrow">Review</p>
+          <h2 tabindex="-1">Review your claim report</h2>
+          <p>Check the information below. You can go back and change anything before submitting.</p>
+          <div id="reviewContent" class="review-list"></div>
+          <label class="check-row confirmation-check"><input id="accuracy" type="checkbox" /> I confirm this report is accurate to the best of my knowledge. I understand coverage has not been determined.</label>
+          <p class="field-error" id="accuracyError"></p>
+        </section>
+
+        <section class="step confirmation" data-step="8" hidden>
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <p class="eyebrow">Report received</p>
+          <h2 tabindex="-1">Your claim report was submitted</h2>
+          <p class="lead">Keep your claim reference handy. You can use it to track progress and add information later.</p>
+          <div class="confirmation-grid">
+            <div><span>Claim reference</span><strong id="claimNumber">CLM-000000</strong></div>
+            <div><span>Status</span><strong>Received</strong></div>
+            <div><span>Submitted</span><strong id="submittedAt"></strong></div>
+            <div><span>Next contact</span><strong id="confirmedContact"></strong></div>
+          </div>
+          <div class="next-steps">
+            <h3>What happens next</h3>
+            <ol>
+              <li>We review the report and attached information.</li>
+              <li>A claims representative is assigned.</li>
+              <li>We contact you using your selected preference.</li>
+              <li>You can return to add documents and see claim status.</li>
+            </ol>
+          </div>
+          <p class="notice">This confirms receipt of your report. It does not mean coverage or payment has been approved.</p>
+          <button type="button" class="primary" id="restart">Start another demo claim</button>
+        </section>
+
+        <div class="actions" id="formActions">
+          <button type="button" class="secondary" id="back" disabled>Back</button>
+          <button type="button" class="primary" id="next">Start report</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>Cedarline Mutual is fictional. This prototype was created as a UX portfolio concept and does not provide insurance coverage or claims services.</p>
+  </footer>
+</body>
+</html>
