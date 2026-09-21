@@ -1,55 +1,88 @@
 # Accessibility Approach
 
-This prototype is **WCAG-informed**, but it has not been formally audited and should not be presented as a certified conforming implementation.
+This prototype is **WCAG-informed**, but it has not been formally audited and should not be described as certified conformance.
 
-## Accessibility goals
+Accessibility is treated as part of the interaction model, not a final visual-polish step.
 
-The design treats accessibility as part of the interaction model rather than a visual-polish step. Key goals include:
+## Implemented considerations
 
-- full keyboard operability;
-- visible keyboard focus;
-- persistent form labels;
-- programmatically associated fieldsets and legends;
-- text-based error identification;
-- focusable error summaries;
-- live status messaging for saves and file selection;
-- no color-only indication of selected/error state;
-- responsive behavior that remains usable at narrow widths and browser zoom;
-- touch-friendly controls;
-- semantic headings and landmarks.
+### Keyboard and focus
 
-## Keyboard and focus
+- skip link to the main form;
+- visible `:focus-visible` treatment;
+- native controls beneath custom visual treatments;
+- focus moves to the active step heading;
+- validation moves focus to the error summary;
+- error-summary items can return focus to the relevant control;
+- Edit actions on the review screen return directly to the relevant step.
 
-The interface includes a skip link, visible `:focus-visible` treatment, native form controls, and programmatic focus movement to each step heading. When validation fails, focus moves to the error summary so keyboard and screen-reader users are alerted to the problem.
+### Form semantics
 
-## Form labels and instructions
+- persistent `<label>` elements;
+- `<fieldset>` and `<legend>` for grouped questions;
+- native radio buttons and checkboxes;
+- helper text remains visible instead of relying on placeholders alone.
 
-Inputs use persistent `<label>` elements, while grouped controls use `<fieldset>` and `<legend>`. Help text remains visible rather than relying on placeholder text as the only instruction.
+### Error identification
 
-## Errors
+Validation errors are:
 
-Validation errors are written as text adjacent to the relevant question and also summarized in a focusable alert region. Error communication is therefore not dependent on red color alone.
+- written beside the question;
+- repeated in a focusable summary;
+- not communicated by color alone;
+- paired with `aria-invalid` on the relevant control.
 
-## Status changes
+### Status messages
 
-Autosave, draft restoration, XML fallback, and file-selection updates use live status regions so important asynchronous changes can be announced by assistive technology.
+Live regions communicate:
 
-## Choice controls
+- saving;
+- successful manual save;
+- draft restoration;
+- XML fallback;
+- file-selection changes;
+- successful submission.
 
-Radio buttons remain native inputs even when visually presented as cards or segmented choices. This preserves expected keyboard and assistive-technology behavior while providing larger visual targets.
+### Progress
 
-## Responsive and zoom considerations
+The progress indicator is not only visual. It uses progressbar semantics and updates:
 
-The desktop two-column layout collapses to one column at narrower widths. Multi-column choice groups and confirmation cards also collapse. The layout avoids fixed viewport-height containers that would create clipping at high zoom.
+- `aria-valuenow`;
+- `aria-valuemin`;
+- `aria-valuemax`;
+- `aria-valuetext`.
 
-## Known limitations / future testing
+### Responsive / zoom considerations
 
-A future production pass should include:
+- desktop shell collapses to one column;
+- policy/category cards collapse to one column;
+- segmented controls stack on narrow screens;
+- review items reflow;
+- no fixed-height form containers;
+- long text can wrap instead of clipping.
 
-- automated accessibility testing;
+### Motion
+
+The stylesheet honors `prefers-reduced-motion: reduce` by disabling transitions and smooth behavior.
+
+### File upload honesty
+
+Browsers do not allow a site to repopulate a local file input after a reload. The prototype therefore restores form data but tells returning users that files must be selected again.
+
+This is both a security constraint and a UX trust issue.
+
+## Known limitations / future validation
+
+A production pass should include:
+
+- automated accessibility scanning;
 - manual keyboard testing across supported browsers;
 - screen-reader testing with representative browser/AT combinations;
-- 200% and 400% zoom/reflow testing;
-- contrast verification for all final visual-design tokens;
-- error-recovery testing with real users;
-- review of file-upload behavior and accessible upload progress if real uploads are implemented.
+- 200% and 400% zoom/reflow checks;
+- contrast verification for all final tokens;
+- accessible real upload progress/status if server uploads are implemented;
+- error-recovery testing with representative users.
+
+## Why this matters for the case study
+
+The goal is not to claim a perfect accessibility score. The goal is to show that accessibility requirements influenced information architecture, component choice, interaction behavior, and implementation decisions throughout the project.
