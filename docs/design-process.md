@@ -1,64 +1,126 @@
 # Design Process
 
-## 1. Define the service moment
+## 1. Define the service boundary
 
-The experience begins at First Notice of Loss, not coverage determination. That boundary matters: the interface should collect enough information to begin triage without pretending to decide liability, coverage, repair cost, fraud, or payment.
+The experience begins at **First Notice of Loss**, not coverage determination.
 
-## 2. Identify the hardest usage contexts
+That boundary prevents the interface from pretending to decide liability, fraud, coverage, repair cost, or payment. Its job is to collect enough structured information to begin triage and orient the claimant to what happens next.
 
-The concept was designed around three stressors:
+## 2. Identify difficult usage contexts
+
+Instead of designing around an ideal desktop session, I started with three stressors:
 
 - mobile use immediately after an auto loss;
-- high-disruption property damage with many possible artifacts;
+- disruptive homeowners damage with lots of potential evidence;
 - accessibility and low technical confidence.
 
-Designing for those cases early helps prevent the desktop happy path from becoming the only path that works well.
+This shaped the requirements before visual design began.
 
-## 3. Translate assumptions into requirements
+## 3. Translate assumptions into design requirements
 
 | Assumption | Design response |
 | --- | --- |
+| A claimant may have more than one policy | Ask which policy the loss belongs to first |
+| Claim types differ by policy | Filter XML categories by Auto/Home context |
 | People may not know exact details | Offer approximate, unsure, and add-later states |
-| Sessions may be interrupted | Autosave and restore drafts |
+| Sessions may be interrupted | Autosave and restore the prior step |
+| Browser file inputs cannot be restored | Tell users to reselect files after returning |
 | Insurance language can create friction | Use plain-language questions first |
-| Claimants may be on phones | Mobile-first single-column form flow |
+| Claimants may be on phones | Mobile-first single-column task flow |
 | Evidence may not be available yet | Make uploads optional for intake |
 | Users need reassurance after submit | Provide reference, status, and next steps |
-| Some users rely on assistive technology | Persistent labels, focus states, text errors, live status messaging |
+| Review may reveal mistakes | Provide direct Edit actions by section |
+| Some users rely on assistive technology | Labels, focus, text errors, live status, semantic progress |
 
-## 4. Create the task flow
+## 4. Create the information architecture
 
-The primary task flow is deliberately linear at the shell level:
+The initial concept used a single generic path. The polished version adds a policy-selection decision before the shared task flow:
 
-`Start → Event → Time/location → Damage/safety → Evidence → Contact → Review → Confirmation`
+```text
+Choose policy
+  ├─ Personal Auto → relevant auto claim categories
+  └─ Homeowners   → relevant property claim categories
+                    ↓
+             When & where
+                    ↓
+             Damage & safety
+                    ↓
+             Evidence
+                    ↓
+             Contact
+                    ↓
+             Review & edit
+                    ↓
+             Confirmation
+```
 
-Branching is reserved for questions whose relevance depends on claim type. This limits irrelevant content and supports progressive disclosure.
+This keeps the shell consistent while avoiding irrelevant category choices.
 
 ## 5. Build low-fidelity wireframes
 
-The low-fidelity pass focused on structure and behavior rather than brand polish. The questions asked during this pass were:
+The wireframe pass focused on behavior rather than brand polish.
 
-- What is required right now?
-- What can be optional?
-- Where does the user need explanation?
-- What happens if they do not know?
-- What happens if they leave?
-- What does success look like after submission?
+Questions included:
+
+- What is actually required now?
+- What can wait?
+- What if the user does not know?
+- What if the session is interrupted?
+- How does the user correct something found during review?
+- What does a useful confirmation state contain?
+- What should never imply that coverage has already been decided?
 
 ## 6. Implement the interaction model
 
-The coded prototype was used as another design artifact, not merely a development exercise. Implementation made interaction questions concrete: validation timing, state restoration, focus behavior, XML fallback behavior, responsive layouts, and the transition from review to confirmation.
+The coded prototype became another design artifact.
 
-## 7. Evaluate heuristically
+Implementation exposed issues that static wireframes did not, including:
 
-Because this rapid sprint did not include primary usability testing, the current evaluation is heuristic. The prototype is reviewed against questions such as:
+- whether save wording matched actual behavior;
+- how restored drafts handle browser file security;
+- how review editing should work;
+- how progress should be exposed to assistive technology;
+- how category branching should be encoded in XML;
+- how focus should move after validation and step changes.
 
-- Can users identify what is required?
-- Can they recover from errors?
-- Are status changes communicated visibly and programmatically?
-- Does the interface avoid making unknown information feel like failure?
-- Is submission clearly different from coverage approval?
+## 7. Run a heuristic evaluation
 
-## 8. Next iteration
+Because this sprint did not include moderated usability testing, I documented a heuristic review instead of inventing test results.
 
-A production iteration would add moderated usability testing, refine content based on observed terminology problems, test the auto/property branches independently, and validate the experience with assistive-technology users.
+The review checked:
+
+- visibility of system status;
+- match with real-world language;
+- error prevention and recovery;
+- user control and freedom;
+- progressive disclosure;
+- accessibility semantics;
+- consistency between design claims and coded behavior.
+
+See [heuristic-evaluation.md](heuristic-evaluation.md).
+
+## 8. Establish lightweight web standards
+
+To demonstrate standards thinking beyond one screen, I documented:
+
+- design tokens;
+- typography;
+- spacing;
+- component usage;
+- responsive behavior;
+- content rules;
+- accessibility rules.
+
+See [design-system.md](design-system.md).
+
+## 9. Production validation plan
+
+A real next phase would include:
+
+1. 5–8 task-based interviews/usability sessions with recent claimants;
+2. separate Auto and Homeowners scenario tests;
+3. keyboard-only and 200–400% zoom evaluation;
+4. screen-reader evaluation with supported browser/AT combinations;
+5. terminology testing for claim categories;
+6. confirmation-screen comprehension testing;
+7. iteration based on observed behavior rather than assumed behavior.
