@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lossCategories>
-  <category code="collision"><label>Vehicle collision</label><description>Crash involving another vehicle, object, or roadway incident.</description></category>
-  <category code="storm"><label>Weather or storm</label><description>Wind, hail, lightning, falling branches, or storm-related damage.</description></category>
-  <category code="water"><label>Water damage</label><description>Leak, burst pipe, appliance, or other non-flood water loss.</description></category>
-  <category code="theft"><label>Theft or vandalism</label><description>Stolen property, break-in, malicious damage, or attempted theft.</description></category>
-  <category code="other"><label>Something else / not sure</label><description>Use this if none of the categories fit or you are unsure.</description></category>
+  <category code="collision" policies="auto">
+    <label>Vehicle collision</label>
+    <description>Crash involving another vehicle, object, or roadway incident.</description>
+  </category>
+  <category code="glass" policies="auto">
+    <label>Glass or windshield damage</label>
+    <description>Cracked or broken glass without a larger collision.</description>
+  </category>
+  <category code="weather-auto" policies="auto">
+    <label>Weather or storm damage</label>
+    <description>Hail, wind, falling branches, flooding, or storm-related vehicle damage.</description>
+  </category>
+  <category code="theft-auto" policies="auto">
+    <label>Theft or vandalism</label>
+    <description>Vehicle theft, break-in, stolen parts, or malicious damage.</description>
+  </category>
+  <category code="water-home" policies="home">
+    <label>Water damage</label>
+    <description>Leak, burst pipe, appliance, or other sudden water loss.</description>
+  </category>
+  <category code="weather-home" policies="home">
+    <label>Weather or storm damage</label>
+    <description>Wind, hail, lightning, falling trees, or other storm-related property damage.</description>
+  </category>
+  <category code="fire-home" policies="home">
+    <label>Fire or smoke</label>
+    <description>Fire, smoke, soot, or related damage to the home or belongings.</description>
+  </category>
+  <category code="theft-home" policies="home">
+    <label>Theft or vandalism</label>
+    <description>Break-in, stolen property, or intentional damage.</description>
+  </category>
+  <category code="other" policies="auto home">
+    <label>Something else / not sure</label>
+    <description>Use this if none of the categories fit or you are unsure.</description>
+  </category>
 </lossCategories>
