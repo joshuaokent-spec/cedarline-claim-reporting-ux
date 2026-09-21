@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lossCategories>
+  <category code="collision"><label>Vehicle collision</label><description>Crash involving another vehicle, object, or roadway incident.</description></category>
+  <category code="storm"><label>Weather or storm</label><description>Wind, hail, lightning, falling branches, or storm-related damage.</description></category>
+  <category code="water"><label>Water damage</label><description>Leak, burst pipe, appliance, or other non-flood water loss.</description></category>
+  <category code="theft"><label>Theft or vandalism</label><description>Stolen property, break-in, malicious damage, or attempted theft.</description></category>
+  <category code="other"><label>Something else / not sure</label><description>Use this if none of the categories fit or you are unsure.</description></category>
+</lossCategories>
